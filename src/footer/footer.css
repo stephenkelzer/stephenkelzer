@@ -1,0 +1,19 @@
+footer {
+    text-align: center;
+    background-color: #3b3b3b;
+    color: #e0e0e0;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 1.15em;
+}
+footer #copyright {
+    float: left;
+}
+footer #resume {
+    float: right;
+}
+footer #resume a {
+    color: #e0e0e0;
+}

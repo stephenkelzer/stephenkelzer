@@ -1,0 +1,58 @@
+header #SocialBar {
+    background-color: #3b3b3b;
+    text-align: center;
+    font-size: 1.4em;
+}
+header #SocialBar .icons {
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+}
+header #SocialBar .icons a.icon {
+    color: #e0e0e0;
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    vertical-align: middle;
+    border-right: 1px solid #696969;
+}
+header #SocialBar .icons a.icon:first-child {
+    border-left: 1px solid #696969;
+}
+header #SocialBar .icons a.icon:hover {
+    background-color: #696969;
+}
+header #MadeBy {
+    text-align: center;
+    background-color: #9a2cff;
+    color: #fff;
+    padding-bottom: 5px;
+}
+header #MadeBy a {
+    color: #fff;
+    text-decoration: none;
+}
+header #MadeBy span .font1 {
+    font-family: "Montserrat Alternates", sans-serif;
+    letter-spacing: 0.00025em;
+    font-size: 1.5em;
+}
+header #MadeBy span .font2 {
+    font-family: "Pacifico", cursive;
+    font-size: 1.5em;
+    color: #3b3b3b;
+}
+
+@media (max-width: 650px) {
+    header #SocialBar .icons {
+        width: 100%;
+    }
+    header #SocialBar .icons a.icon {
+        width: 16.66666667%;
+        width: 16.66666667vmin;
+        height: 16.66666667vmin;
+        line-height: 16.66666667vmin;
+        font-size: 6vmin;
+    }
+}

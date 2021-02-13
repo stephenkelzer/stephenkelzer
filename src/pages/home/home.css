@@ -1,0 +1,25 @@
+main {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+main h1 {
+    font-size: 2.25em;
+    font-weight: 200;
+}
+main p {
+    font-size: 14px;
+}
+
+@media (max-width: 650px) {
+    main h1 {
+        font-size: 8vw;
+    }
+    main p {
+        font-size: 4vw;
+    }
+}
