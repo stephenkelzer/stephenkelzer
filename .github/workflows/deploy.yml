@@ -1,25 +1,79 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [master]
-  workflow_dispatch:
+  release:
+    tags:
+      - '^[0-9]+\.[0-9]+\.[0-9]+$' # semver
+    types:
+      - published
+
+env:
+  CARGO_TERM_COLOR: always
+  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  BUILD_DIR: dist
+  APP_VERSION: ${{ github.ref_name }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "gh-pages-deploy"
+  cancel-in-progress: true
 
 jobs:
-  build:
+
+  build-artifact:
+
     runs-on: ubuntu-latest
+
     steps:
+
+      - name: Install Trunk
+        uses: jetli/trunk-action@v0.1.0
+        with:
+          version: 'latest'
+
+      - name: Download WASM Target
+        run: rustup target add wasm32-unknown-unknown
+
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Build App
-        run: npm run build
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+      - name: Update TOML File Version
+        uses: ciiiii/toml-editor@1.0.0
         with:
-          branch: gh-pages
-          folder: build
+          file: "Cargo.toml"
+          key: "package.version"
+          value: ${{ env.APP_VERSION }}
+
+      - name: Build
+        run: trunk build --release --public-url="${{ env.REPOSITORY_NAME }}"
+
+      - name: Add GitHub Pages 404 Page
+        run: echo '<script>window.location.href="/${{ env.REPOSITORY_NAME }}";</script>' > ${{ env.BUILD_DIR }}/404.html
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{ env.BUILD_DIR }}
+  
+  deploy-to-github-pages:
+
+    needs: build-artifact
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

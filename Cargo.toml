@@ -1,0 +1,13 @@
+[package]
+name = "stephenkelzer"
+version = "0.0.0"            # this get's updated automatically by our deployment GitHub Action
+edition = "2021"
+authors = ["Stephen Kelzer"]
+
+[dependencies]
+yew = { version = "0.20.0", features = ["csr"] }
+gloo = "0.8.0"
+itertools = "0.10.3"
+wasm-bindgen = "0.2.82"
+stylist = { version = "0.12.0", features = ["yew", "yew_integration"] }
+chrono = "0.4.23"

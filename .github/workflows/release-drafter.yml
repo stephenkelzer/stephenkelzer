@@ -1,0 +1,24 @@
+name: Release Drafter
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  release-drafter:
+
+    name: Run Release Drafter
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Draft Release
+        uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter-template.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
