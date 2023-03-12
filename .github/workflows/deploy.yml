@@ -49,7 +49,7 @@ jobs:
           value: ${{ env.APP_VERSION }}
 
       - name: Build
-        run: trunk build --release --public-url="${{ env.REPOSITORY_NAME }}"
+        run: trunk build --release
 
       - name: Add GitHub Pages 404 Page
         run: echo '<script>window.location.href="/${{ env.REPOSITORY_NAME }}";</script>' > ${{ env.BUILD_DIR }}/404.html
